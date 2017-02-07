@@ -1,5 +1,5 @@
 (ns sgf-reader.core
-  (:use seesaw.core)
+  (:use seesaw.core seesaw.chooser)
   (:gen-class)
   )
 
@@ -13,5 +13,10 @@
               :content "Hello, hello hello my dear Seesaw",
               :on-close :exit)
        pack!
-       show!))
-  )
+       show!)))
+
+(defn games-file-selector
+  []
+  (choose-file :filters [["Games" ["sgf"]
+                          ["Folders" #(.isDirectory %)]
+                          (file-filter "All files" (constantly true))]]))
