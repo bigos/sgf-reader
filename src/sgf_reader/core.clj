@@ -20,3 +20,7 @@
   (choose-file :filters [["Games" ["sgf"]
                           ["Folders" #(.isDirectory %)]
                           (file-filter "All files" (constantly true))]]))
+
+(defn file-content
+  [f]
+  (doall (slurp f)))
