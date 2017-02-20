@@ -1,6 +1,7 @@
 # sgf-reader
 
-FIXME: description
+SGF file format reader that uses smee/binary library.
+https://github.com/smee/binary
 
 ## Installation
 
