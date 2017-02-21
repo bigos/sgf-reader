@@ -1,6 +1,6 @@
 (ns sgf-reader.core
-  (:use seesaw.core seesaw.chooser
-        org.clojars.smee.binary.core
+  (:use seesaw.core
+        seesaw.chooser
         [clojure.pprint :only [cl-format]]
         [clojure.java.io :only [input-stream]])
   (:gen-class))
