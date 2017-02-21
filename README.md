@@ -19,7 +19,9 @@ FIXME: listing of options this app accepts.
 
 ## Examples
 
-...
+example of decoding data with the smee binary plugin
+https://groups.google.com/forum/#!topic/clojure/Z9ZJ92h3qyc
+
 
 ### Bugs
 

@@ -1,5 +1,5 @@
 (ns sgf-reader.core
-  (:use seesaw.core seesaw.chooser)
+  (:use seesaw.core seesaw.chooser org.clojars.smee.binary.core)
   (:gen-class)
   )
 
