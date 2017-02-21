@@ -1,4 +1,5 @@
 (ns sgf-reader.core
+  (:require [instaparse.core :as insta])
   (:use seesaw.core
         seesaw.chooser
         [clojure.pprint :only [cl-format]]
@@ -27,3 +28,11 @@
   [file-name]
   (let [in (input-stream file-name)]
       (cl-format true "=== ~A ~A~%" in *in*)))
+
+;; http://stackoverflow.com/questions/17432282/clojures-require-and-instaparse
+(def as-and-bs
+  (insta/parser
+   "S = AB*
+     AB = A B
+     A = 'a'+
+     B = 'b'+"))
