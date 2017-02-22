@@ -58,6 +58,6 @@
     Any = #\".\"
     "))
 
-(def sgf-data
-  (insta/parser
-   (clojure.java.io/resource "grammar.bnf")))
+;; (def sgf-data
+;;   (insta/parser
+;;    (slurp grammar-file)))
