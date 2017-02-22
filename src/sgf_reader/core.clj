@@ -3,6 +3,7 @@
   (:require [instaparse.core :as insta])
   (:use seesaw.core
         seesaw.chooser
+        rhizome.viz
         [clojure.pprint :only [cl-format]]
         [clojure.java.io :only [input-stream]])
   (:gen-class))
@@ -57,9 +58,10 @@
   (insta/parser
    "S = GameTree+
   GameTree   = '(' Node+ GameTree*  Newline? ')' Newline?
-  Node       = Newline? ';' Property*
-  Property   = Newline? PropIdent PropValue+
-  PropIdent  = UcLetter+
+  Move = ('W' | 'B') '[' #\"[a-z]{2}\" ']'
+  Node       = Newline? ';' ( Property* | Move )
+  Property   = Newline?  #\"[A-Z]{1,2}\" PropValue+
+  PropIdent  = #\"[A-Z]{1,2}\"
   PropValue  = Newline? ( '[' CValueType ']' )
   CValueType = (ValueType | Compose)
   Newline = #\"\n\"
@@ -69,10 +71,9 @@
   Real = Number '.' Digits
   Double = Real 'e' Real
   Color = 'white' 'black'
-  SimpleText = (Digit | LcLetter | UcLetter | ' ' | '-' | '.' | '+' | '=' | ':' | Newline )*
-  Text = SimpleText
+  Text = ( #\"(\\w|\\d)+\" | '-' | '.' | ' ' |'+'|'='|':'  | Newline )+
   Point = (LcLetter LcLetter)
-  ValueType  = ( Number | Real | Double | Color | SimpleText | Text )?
+  ValueType  = ( Number | Real | Double | Color | Text )?
   LcLetter = #\"[a-z]\"
   UcLetter   = #\"[A-Z]\"
   Compose    = ValueType ':' ValueType
