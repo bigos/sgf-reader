@@ -41,17 +41,24 @@
      A = 'a'+
      B = 'b'+"))
 
+(def mydat
+  (insta/parser
+   "S = ( Any+ Newline)+
+    Any = #\".\"
+    Newline = #\"\n\"
+    "))
+
 (def sgf-data
   (insta/parser
    "S = GameTree+
   GameTree   = '(' Sequence GameTree* ')'
   Sequence   = Node+
-  Node       = Newline? ';' Property* Newline?
-  Property   = ( (Newline)? PropIdent PropValue+)+ Newline?
+  Node       = ';' Property*
+  Property   = PropIdent PropValue+ Newline?
   PropIdent  = UcLetter+
   PropValue  = '[' CValueType ']'
   CValueType = (ValueType | Compose)
-  Newline = #\"$\"
+  Newline = #\"\n\"
   Digit = ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')
   Digits = Digit+
   Number = ('+' '-')? Digits
