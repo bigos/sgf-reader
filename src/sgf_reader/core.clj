@@ -60,9 +60,9 @@
   GameTree   = '(' Node+ GameTree*  Newline? ')' Newline?
   Move = ('W' | 'B') '[' #\"[a-z]{2}\" ']'
   Node       = Newline? ';' ( Property* | Move )
-  Property   = Newline?  #\"[A-Z]{1,2}\" PropValue+
+  Property   =  #\"[A-Z]{1,2}\" PropValue+
   PropIdent  = #\"[A-Z]{1,2}\"
-  PropValue  = Newline? ( '[' CValueType ']' )
+  PropValue  = ( '[' CValueType ']' )  Newline?
   CValueType = (ValueType | Compose)
   Newline = #\"\n\"
   Digit = ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')
