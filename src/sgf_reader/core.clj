@@ -34,6 +34,10 @@
   [file-name]
   (slurp file-name))
 
+(def grammar-file (clojure.java.io/file
+                   (clojure.java.io/resource
+                    "grammar.bnf")))
+
 ;; http://stackoverflow.com/questions/17432282/clojures-require-and-instaparse
 (def as-and-bs
   (insta/parser
@@ -56,25 +60,4 @@
 
 (def sgf-data
   (insta/parser
-   "S = GameTree+
-  GameTree   = '(' Node+ GameTree*  Newline? ')' Newline?
-  Move = ('W' | 'B') '[' #\"[a-z]{2}\" ']'
-  Node       = Newline? ';' ( Property* | Move )
-  Property   =  #\"[A-Z]{1,2}\" PropValue+
-  PropIdent  = #\"[A-Z]{1,2}\"
-  PropValue  = ( '[' CValueType ']' )  Newline?
-  CValueType = (ValueType | Compose)
-  Newline = #\"\n\"
-  Digit = ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')
-  Digits = Digit+
-  Number = ('+' '-')? Digits
-  Real = Number '.' Digits
-  Double = Real 'e' Real
-  Color = 'white' 'black'
-  Text = ( #\"(\\w|\\d)+\" | '-' | '.' | ' ' |'+'|'='|':'  | Newline )+
-  Point = (LcLetter LcLetter)
-  ValueType  = ( Number | Real | Double | Color | Text )?
-  LcLetter = #\"[a-z]\"
-  UcLetter   = #\"[A-Z]\"
-  Compose    = ValueType ':' ValueType
-   "))
+   (clojure.java.io/resource "grammar.bnf")))

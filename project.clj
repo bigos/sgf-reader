@@ -7,6 +7,8 @@
                  [instaparse "1.4.5"]
                  [rhizome "0.2.7"]
                  [seesaw "1.4.5"]]
+  :resource-paths ["src/resources/grammars"
+                   "src/resources/images"]
   :main ^:skip-aot sgf-reader.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
