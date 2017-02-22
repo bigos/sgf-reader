@@ -1,18 +1,19 @@
 S = GameTree+
-GameTree   = '(' Node+ GameTree*  Newline? ')' Newline?
-Node = Newline? ';' Property*
-Property = UpperLetter UpperLetter? PropValue+
-PropValue  = ( '[' CValueType ']' )  Newline?
+GameTree   = '(' Sequence GameTree* ')' Newline?
+Sequence   = Node+
+Node       = ';' Property* Newline?
+Property   = PropIdent PropValue+
+PropIdent  = UcLetter+
+PropValue  = '[' CValueType ']' Newline?
 CValueType = (ValueType | Compose)
+ValueType  = (None | Text)
+UcLetter   = #'[A-Z]'
 Compose    = ValueType ':' ValueType
-+ValueType  = ( Text )?
-Newline = #'\n'
-Text = Letter+
-Digit = ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')
-Digits = Digit+
-Number = ('+' '-')? Digits
-Compose    = ValueType ':' ValueType
-UpperLetter = #'[A-Z]'
-LowerLetter = #'[a-z]'
-Letter = UpperLetter | LowerLetter
-
+None       = ''
+Space      = ' '
+Newline    = #"\n"
+EscapedNewline = #"\\\n"
+Digit      = #"\d"
+Number = ('-' | '+')? Digit+
+Text = SimpleText
+SimpleText = ( #"[a-z]" | #"[A-Z]" | Digit | Space | Newline | EscapedNewline | "-" | '.' | '+' | '=' | ': ' | '@' | '(' | ')' | '/' )+

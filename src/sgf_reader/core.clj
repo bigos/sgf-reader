@@ -58,6 +58,6 @@
     Any = #\".\"
     "))
 
-;; (def sgf-data
-;;   (insta/parser
-;;    (slurp grammar-file)))
+(def sgf-data
+  (insta/parser
+   (slurp grammar-file)))
