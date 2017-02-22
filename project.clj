@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [instaparse "1.4.5"]
+                 [rhizome "0.2.7"]
                  [seesaw "1.4.5"]]
   :main ^:skip-aot sgf-reader.core
   :target-path "target/%s"
