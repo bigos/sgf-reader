@@ -43,20 +43,24 @@
 
 (def mydat
   (insta/parser
-   "S = ( Any+ Newline)+
-    Any = #\".\"
+   "S = ( Known+ Newline )+
+    Known = LowerLetter | UpperLetter | Number
+    LowerLetter = #\"[a-z]\"
+    UpperLetter = #\"[A-Z]\"
+    Digit = #\"[0-9]\"
+    Number = Digit
     Newline = #\"\n\"
+    Any = #\".\"
     "))
 
 (def sgf-data
   (insta/parser
    "S = GameTree+
-  GameTree   = '(' Sequence GameTree* ')'
-  Sequence   = Node+
-  Node       = ';' Property*
-  Property   = PropIdent PropValue+ Newline?
+  GameTree   = '(' Node+ GameTree*  Newline? ')' Newline?
+  Node       = Newline? ';' Property*
+  Property   = Newline? PropIdent PropValue+
   PropIdent  = UcLetter+
-  PropValue  = '[' CValueType ']'
+  PropValue  = Newline? ( '[' CValueType ']' )
   CValueType = (ValueType | Compose)
   Newline = #\"\n\"
   Digit = ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')
@@ -65,11 +69,11 @@
   Real = Number '.' Digits
   Double = Real 'e' Real
   Color = 'white' 'black'
-  SimpleText = (#\".\")+
+  SimpleText = (Digit | LcLetter | UcLetter | ' ' | '-' | '.' | '+' | '=' | ':' | Newline )*
   Text = SimpleText
   Point = (LcLetter LcLetter)
   ValueType  = ( Number | Real | Double | Color | SimpleText | Text )?
   LcLetter = #\"[a-z]\"
-  UcLetter   = ('A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z')
+  UcLetter   = #\"[A-Z]\"
   Compose    = ValueType ':' ValueType
    "))
