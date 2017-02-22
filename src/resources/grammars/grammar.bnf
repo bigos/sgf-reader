@@ -1,5 +1,5 @@
 S = GameTree+
-GameTree   = Newline* '(' Node+ GameTree* ')' Newline*
+GameTree   = Newline* <'('> Node+ GameTree* <')'> Newline*
 Node       = <';'> Data* Newline*
 Data       = (Key Val+) | Move
 Move       = ('B' | 'W') <'['> Coordinate Coordinate <']'>
@@ -16,7 +16,7 @@ EscapedNewline = #"\\\n"
 Digit      = #"\d"
 Number     = ('-' | '+')? Digit+
 <Text>     = SimpleText
-<SimpleText> = ( #"[^\]:]" | ': ' )+
+<SimpleText> = ( #"[^\]:]+" | ': ' | '\\:' | '\\]')+  (* any character except unescaped ':' and ']' or escaped versions *)
 <Coordinate> = #"[a-s]"
 <Coordinates> = Coordinate Coordinate
 Range      = Coordinates ':' Coordinates
