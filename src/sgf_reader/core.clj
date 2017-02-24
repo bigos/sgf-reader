@@ -25,10 +25,14 @@
   (choose-file :filters [["Games" ["sgf"]
                           ["Folders" #(.isDirectory %)]
                           (file-filter "All files" (constantly true))]]))
+(defn expand-home [s]
+  (if (.startsWith s "~")
+    (clojure.string/replace-first s "~" (System/getProperty "user.home"))
+    s))
 
 (defn file-content
   [file-name]
-  (slurp file-name))
+  (slurp (expand-home file-name)))
 
 (def grammar-file (clojure.java.io/file
                    (clojure.java.io/resource
