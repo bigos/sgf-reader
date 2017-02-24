@@ -5,7 +5,7 @@
         seesaw.chooser
         rhizome.viz
         [clojure.pprint :only [cl-format]]
-        [clojure.java.io :only [input-stream]])
+        clojure.java.io)
   (:gen-class))
 
 (defn -main
@@ -33,6 +33,12 @@
 (defn file-content
   [file-name]
   (slurp (expand-home file-name)))
+
+(defn walk
+  "Walk the directory DIRPATH returning files matching PATTERN."
+  [dirpath pattern]
+  (doall (filter #(re-matches pattern (.getName %))
+                 (file-seq (file dirpath)))))
 
 (def grammar-file (clojure.java.io/file
                    (clojure.java.io/resource
