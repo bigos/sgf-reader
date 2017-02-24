@@ -26,10 +26,6 @@
                           ["Folders" #(.isDirectory %)]
                           (file-filter "All files" (constantly true))]]))
 
-;; (defn file-content
-;;   [file-name]
-;;   (let [in (input-stream file-name)]
-;;       (cl-format true "=== ~A ~A~%" in *in*)))
 (defn file-content
   [file-name]
   (slurp file-name))
@@ -38,26 +34,9 @@
                    (clojure.java.io/resource
                     "grammar.bnf")))
 
-;; http://stackoverflow.com/questions/17432282/clojures-require-and-instaparse
-(def as-and-bs
-  (insta/parser
-   "S = AB*
-     AB = A B
-     A = 'a'+
-     B = 'b'+"))
-
-(def mydat
-  (insta/parser
-   "S = ( Known+ Newline )+
-    Known = LowerLetter | UpperLetter | Number
-    LowerLetter = #\"[a-z]\"
-    UpperLetter = #\"[A-Z]\"
-    Digit = #\"[0-9]\"
-    Number = Digit
-    Newline = #\"\n\"
-    Any = #\".\"
-    "))
-
 (def sgf-data
   (insta/parser
    (slurp grammar-file)))
+
+;;; getting parsed tree of sgf file
+;; (insta/parse sgf-data (slurp (games-file-selector)) )
