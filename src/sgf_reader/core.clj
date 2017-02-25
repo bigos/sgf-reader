@@ -34,11 +34,15 @@
   [file-name]
   (slurp (expand-home file-name)))
 
-(defn walk
-  "Walk the directory DIRPATH returning files matching PATTERN."
-  [dirpath pattern]
-  (doall (filter #(re-matches pattern (.getName %))
-                 (file-seq (file dirpath)))))
+(defn directories-tree [p]
+  (filter (fn [x] (.isDirectory x))
+          (file-seq (file (expand-home p)))))
+
+(defn first-sgf-file [dir]
+  (first
+   (filter #(re-matches #".*\.(sgf|SGF)" %)
+           (map #(.getPath %)
+                (file-seq dir)))))
 
 (def grammar-file (clojure.java.io/file
                    (clojure.java.io/resource
@@ -50,3 +54,11 @@
 
 ;;; getting parsed tree of sgf file
 ;; (insta/parse sgf-data (slurp (games-file-selector)) )
+
+;; getting all parsed structures for grammar tests
+;; (all-parsed-files "~/Documents/Go")
+(defn all-parsed-files [dir]
+  (map #(insta/parse sgf-data (slurp %))
+       (remove nil?
+               (map first-sgf-file
+                    (directories-tree dir)))))
