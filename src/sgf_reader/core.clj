@@ -56,7 +56,8 @@
 ;; (insta/parse sgf-data (slurp (games-file-selector)) )
 
 ;; getting all parsed structures for grammar tests
-;; (all-parsed-files "~/Documents/Go")
+;; (all-parsed-files "~/Documents/Go/Professional Games/")
+;; (all-parsed-files "~/Documents/Go/Pro_collection")
 (defn all-parsed-files [dir]
   (map #(insta/parse sgf-data (slurp %))
        (remove nil?
