@@ -3,6 +3,8 @@
   ;; wiki https://github.com/daveray/seesaw/wiki
   (:require [instaparse.core :as insta])
   (:use seesaw.core
+        seesaw.graphics
+        seesaw.color
         seesaw.dev                      ;if you comment it out you can use (show-options)
         seesaw.chooser
         rhizome.viz
@@ -15,6 +17,8 @@
   [& args]
   (println "Good bye javaFX!")
   ;; (native!)
+
+  ;; menu actions
   (let [exit-action (action
                      :handler (fn [e]
                                 (.dispose (to-frame e)))
@@ -29,6 +33,7 @@
                                         "and a bad code"]))
                      :name "About"
                      :tip "More information about the program")]
+    ;; frame
     (invoke-later
      (-> (frame :title "Hello",
                 :size [800 :by 600],
@@ -40,10 +45,21 @@
                                    (menu :text "Help"
                                          :items [help-action])
                                    ])
-                :content "Hello, hello hello my dear Seesaw",
+                :content (border-panel
+                          :north (vertical-panel :items [
+                                                         "This"
+                                                         "is"
+                                                         "a"
+                                                         "vertical"
+                                                         "stack of"
+                                                         "JLabels"])
+                          :south (label :border ""  :id :status :text "Status Bar"))
                 )
          pack!
          show!))))
+
+;; stuck with drawing, following link should provide a clue
+;; https://github.com/daveray/seesaw/blob/develop/test/seesaw/test/examples/game_of_life.clj#L139
 
 ;;; sgf format stuff -----------------------------------------------------------
 (defn games-file-selector
