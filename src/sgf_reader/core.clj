@@ -1,5 +1,6 @@
 (ns sgf-reader.core
   ;; http://stackoverflow.com/questions/17432282/clojures-require-and-instaparse
+  ;; wiki https://github.com/daveray/seesaw/wiki
   (:require [instaparse.core :as insta])
   (:use seesaw.core
         seesaw.chooser
@@ -12,14 +13,18 @@
   "I don't do a whole lot ... yet."
   [& args]
   (println "Good bye javaFX!")
-  (native!)
+  ;; (native!)
   (invoke-later
    (-> (frame :title "Hello",
+              :size [800 :by 600],
+              :on-close :exit,
+              :menubar (menubar)
               :content "Hello, hello hello my dear Seesaw",
-              :on-close :exit)
+              )
        pack!
        show!)))
 
+;;; sgf format stuff -----------------------------------------------------------
 (defn games-file-selector
   []
   (choose-file :filters [["Games" ["sgf"]
