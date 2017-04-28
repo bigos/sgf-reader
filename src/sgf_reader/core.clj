@@ -3,6 +3,7 @@
   ;; wiki https://github.com/daveray/seesaw/wiki
   (:require [instaparse.core :as insta])
   (:use seesaw.core
+        seesaw.dev                      ;if you comment it out you can use (show-options)
         seesaw.chooser
         rhizome.viz
         [clojure.pprint :only [cl-format]]
@@ -14,15 +15,25 @@
   [& args]
   (println "Good bye javaFX!")
   ;; (native!)
-  (invoke-later
-   (-> (frame :title "Hello",
-              :size [800 :by 600],
-              :on-close :exit,
-              :menubar (menubar)
-              :content "Hello, hello hello my dear Seesaw",
-              )
-       pack!
-       show!)))
+  (let [exit-action (action
+                     :handler (fn [e] (.dispose (to-frame e)))
+                     :name "Exit"
+                     :tip "Close me.")]
+      (invoke-later
+       (-> (frame :title "Hello",
+                  :size [800 :by 600],
+                  :on-close :hide,
+                  :menubar (menubar :items
+                                    [(menu :text "File"
+                                           :items [exit-action
+                                                    ])
+                                     (menu :text "Edit" :items [])
+                                     (menu :text "Help" :items [])
+                                     ])
+                  :content "Hello, hello hello my dear Seesaw",
+                  )
+           pack!
+           show!))))
 
 ;;; sgf format stuff -----------------------------------------------------------
 (defn games-file-selector
